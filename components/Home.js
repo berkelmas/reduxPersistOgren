@@ -2,20 +2,25 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {View, TextInput, Button, Text} from 'react-native';
 
-import {updateUsername} from '../actions';
+import {updateUsername, updatePassword} from '../actions';
 
 class Home extends React.Component {
   constructor(props) {
     super(props);
-    this.state= {username: ''}
+    this.state= {username: '', password: ''}
   }
 
-  handleChange = username => {
+  handleUsername = username => {
     this.setState({username})
+  }
+
+  handlePassword = password => {
+    this.setState({password})
   }
 
   handleSubmit = () => {
     this.props.updateUsername(this.state.username)
+    this.props.updatePassword(this.state.password)
   }
 
   render() {
@@ -24,19 +29,25 @@ class Home extends React.Component {
       <View>
           <TextInput
             placeholder="Hadi artık"
-            onChangeText={this.handleChange}
+            onChangeText={this.handleUsername}
             value={this.state.username}
+            />
+          <TextInput
+            placeholder="Password Gir"
+            onChangeText={this.handlePassword}
+            value={this.state.password}
             />
           <Button title="Submit" onPress={this.handleSubmit} />
           <Text>{this.props.username}</Text>
+          <Text>{this.props.password}</Text>
       </View>
     );
   }
 }
 
 mapStateToProps = ({userResponse}) => {
-  const {username} = userResponse;
-  return ({username})
+  const {username, password} = userResponse;
+  return ({username, password})
 }
 
-export default connect(mapStateToProps, {updateUsername})(Home);
+export default connect(mapStateToProps, {updateUsername, updatePassword})(Home);

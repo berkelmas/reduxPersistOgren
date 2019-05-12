@@ -1,4 +1,4 @@
-import {applyMiddleware, createStore, compose} from 'redux';
+import {applyMiddleware, createStore, compose, combineReducers} from 'redux';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 
@@ -6,15 +6,18 @@ import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
-import rootReducer from './reducers'; // the value from combineReducers
+import userReducer from './reducers/userReducer';
 
-const persistConfig = {
- key: 'root',
+const userPersistConfig = {
+ key: 'root1',
  storage: storage,
- stateReconciler: autoMergeLevel2 // see "Merge Process" section for details.
+ stateReconciler: autoMergeLevel2,
+ blacklist: ['password']
 };
 
-const pReducer = persistReducer(persistConfig, rootReducer);
+const rootReducer = combineReducers({
+  userResponse : persistReducer(userPersistConfig, userReducer)
+})
 
-export const store = createStore(pReducer, {}, applyMiddleware(thunk, logger));
+export const store = createStore(rootReducer, {}, applyMiddleware(thunk, logger));
 export const persistor = persistStore(store);

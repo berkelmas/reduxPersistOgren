@@ -6,3 +6,12 @@ export const updateUsername = (username) => {
       })
   }
 }
+
+export const updatePassword = password => {
+  return dispatch => {
+    dispatch({
+      type: 'updatePassword',
+      payload: password
+    })
+  }
+}
