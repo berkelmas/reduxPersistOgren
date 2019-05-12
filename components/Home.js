@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {View, TextInput, Button} from 'react-native';
+import {View, TextInput, Button, Text} from 'react-native';
 
 import {updateUsername} from '../actions';
 
@@ -28,6 +28,7 @@ class Home extends React.Component {
             value={this.state.username}
             />
           <Button title="Submit" onPress={this.handleSubmit} />
+          <Text>{this.props.username}</Text>
       </View>
     );
   }

@@ -1,5 +1,5 @@
 const initialState = {
-  username: ''
+  username: '',
 }
 
 export default (state= initialState, action) => {
@@ -7,6 +7,6 @@ export default (state= initialState, action) => {
     case 'updateUsername':
       return {...state, username: action.payload}
     default:
-      return {...state}
+      return state
   }
 }
